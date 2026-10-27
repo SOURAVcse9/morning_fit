@@ -11,17 +11,18 @@ An offline-first Flutter walking and fitness tracker for Android, iOS, and Web. 
 
 ## 🚀 Release Download
 
-The release APK is bundled directly in this repository:
-
-* **Direct APK Download:** [Download MorningFit v1.0.0 Release APK](release/morning_fit-v1.0.0-release.apk)
+* **Direct APK Download (GitHub Release):** [morning_fit-v1.0.0.apk](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk)
+* **In-Repository File:** [release/morning_fit-v1.0.0-release.apk](release/morning_fit-v1.0.0-release.apk)
+* **Release Page:** [MorningFit v1.0.0 Release Notes & Assets](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
 * **File Size:** ~62.2 MB
 * **Target Platforms:** Android 6.0+ (API 23+)
-* **Architecture:** arm64-v8a, armeabi-v7a, x86_64
+* **Architecture:** Universal (arm64-v8a, armeabi-v7a, x86_64)
 
 ### How to Install the APK on Android
-1. Download `morning_fit-v1.0.0-release.apk` from the [release/](release/morning_fit-v1.0.0-release.apk) folder or directly to your Android device.
-2. Open the downloaded file. If prompted, allow "Install from unknown sources" in your browser or file manager settings.
-3. Tap **Install** and launch MorningFit!
+1. Download the APK using the [Direct Download Link](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk).
+2. Open the downloaded `.apk` file on your Android device.
+3. If prompted, grant permission to "Install from unknown sources" in settings.
+4. Tap **Install** and launch MorningFit!
 
 ---
 
