@@ -10,3 +10,4 @@ key.properties
 *.jks
 ios/Pods/
 .DS_Store
+*.zip
