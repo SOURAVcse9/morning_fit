@@ -1,11 +1,15 @@
 # MorningFit — Walk Better. Live Healthier.
 
+<p align="center">
+  <img src="assets/images/logo.png" alt="MorningFit Logo" width="128" height="128" style="border-radius: 28px;" />
+</p>
+
 [![Flutter Tests](https://img.shields.io/badge/Flutter%20Tests-29%20Passing-brightgreen.svg)](#tests)
 [![Flutter Analyze](https://img.shields.io/badge/Flutter%20Analyze-0%20Issues-brightgreen.svg)](#code-quality)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](#platforms)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-orange.svg)](release/morning_fit-v1.0.0-release.apk)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-orange.svg)](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
 
-An offline-first Flutter walking and fitness tracker for Android, iOS, and Web. Features step counting, GPS route tracking and distance visualization on OpenStreetMap, workout history calendar, analytics, daily routines, home exercise library, and local reminders.
+An offline-first, modern Flutter walking and fitness tracker for Android, iOS, and Web. Features step counting, GPS route tracking and distance visualization on OpenStreetMap, workout history calendar, analytics, daily routines, home exercise library, and local reminders.
 
 ---
 
@@ -14,7 +18,7 @@ An offline-first Flutter walking and fitness tracker for Android, iOS, and Web. 
 * **Direct APK Download (GitHub Release):** [morning_fit-v1.0.0.apk](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk)
 * **In-Repository File:** [release/morning_fit-v1.0.0-release.apk](release/morning_fit-v1.0.0-release.apk)
 * **Release Page:** [MorningFit v1.0.0 Release Notes & Assets](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
-* **File Size:** ~62.2 MB
+* **File Size:** ~62.6 MB
 * **Target Platforms:** Android 6.0+ (API 23+)
 * **Architecture:** Universal (arm64-v8a, armeabi-v7a, x86_64)
 

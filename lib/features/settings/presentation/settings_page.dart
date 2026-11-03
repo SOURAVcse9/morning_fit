@@ -176,7 +176,20 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           },
         ),
         const _Header('About'),
-        const ListTile(title: Text('MorningFit 1.0.0'), subtitle: Text('Walk Better. Live Healthier.')),
+        ListTile(
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              'assets/images/logo.png',
+              width: 44,
+              height: 44,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Icon(Icons.directions_walk, size: 36),
+            ),
+          ),
+          title: const Text('MorningFit 1.0.0', style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: const Text('Walk Better. Live Healthier.'),
+        ),
         const ListTile(
           title: Text('Privacy'),
           subtitle: Text('Everything stays on this device. GPS coordinates are stored locally in SQLite and never uploaded. Map tiles are downloaded from OpenStreetMap when you view a map, so maps need internet unless tiles are cached.'),
