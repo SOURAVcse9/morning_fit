@@ -97,23 +97,27 @@ class NotificationService {
     await init();
     for (final t in tasks) {
       for (var d = 1; d <= 7; d++) {
-        await _plugin.cancel(NotificationIds.forTask(t.id, d));
+        try {
+          await _plugin.cancel(NotificationIds.forTask(t.id, d));
+        } catch (_) {}
       }
     }
     if (!enabled) return;
     for (final t in tasks.where((t) => t.isEnabled)) {
       final days = t.repeatDays.split(',').where((s) => s.isNotEmpty).map(int.parse);
       for (final d in days) {
-        await _plugin.zonedSchedule(
-          NotificationIds.forTask(t.id, d),
-          t.title,
-          t.description.isEmpty ? 'MorningFit reminder' : t.description,
-          _next(d, t.scheduledMinutes),
-          _details,
-          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-          matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-        );
+        try {
+          await _plugin.zonedSchedule(
+            NotificationIds.forTask(t.id, d),
+            t.title,
+            t.description.isEmpty ? 'MorningFit reminder' : t.description,
+            _next(d, t.scheduledMinutes),
+            _details,
+            androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+            uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+            matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+          );
+        } catch (_) {}
       }
     }
   }
@@ -122,31 +126,37 @@ class NotificationService {
   /// invite the user to open the Progress tab.
   Future<void> scheduleSummaries({required bool enabled}) async {
     await init();
-    await _plugin.cancel(NotificationIds.weeklySummary);
-    await _plugin.cancel(NotificationIds.monthlySummary);
+    try {
+      await _plugin.cancel(NotificationIds.weeklySummary);
+      await _plugin.cancel(NotificationIds.monthlySummary);
+    } catch (_) {}
     if (!enabled) return;
-    await _plugin.zonedSchedule(
-      NotificationIds.weeklySummary,
-      'Your weekly summary',
-      'See how your week went in the Progress tab.',
-      _next(DateTime.sunday, 20 * 60),
-      _details,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-    );
+    try {
+      await _plugin.zonedSchedule(
+        NotificationIds.weeklySummary,
+        'Your weekly summary',
+        'See how your week went in the Progress tab.',
+        _next(DateTime.sunday, 20 * 60),
+        _details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+      );
+    } catch (_) {}
     final now = tz.TZDateTime.now(tz.local);
     var first = tz.TZDateTime(tz.local, now.year, now.month, 1, 9);
     if (!first.isAfter(now)) first = tz.TZDateTime(tz.local, now.year, now.month + 1, 1, 9);
-    await _plugin.zonedSchedule(
-      NotificationIds.monthlySummary,
-      'Your monthly summary',
-      'Review last month\'s walking in the Progress tab.',
-      first,
-      _details,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime,
-    );
+    try {
+      await _plugin.zonedSchedule(
+        NotificationIds.monthlySummary,
+        'Your monthly summary',
+        'Review last month\'s walking in the Progress tab.',
+        first,
+        _details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime,
+      );
+    } catch (_) {}
   }
 }

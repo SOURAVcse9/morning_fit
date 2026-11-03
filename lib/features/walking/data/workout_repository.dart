@@ -42,7 +42,7 @@ class WorkoutRepository {
         steps: steps,
         distanceMeters: meters,
         durationSeconds: seconds,
-        calories: estimateCalories(meters, weightKg: weightKg),
+        calories: estimateCalories(meters, weightKg: weightKg, steps: steps),
         averagePace: averagePace(meters, seconds),
         points: _companions(id, pts),
       );

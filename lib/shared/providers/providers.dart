@@ -49,6 +49,7 @@ class SettingsNotifier extends AsyncNotifier<AppSettingsModel> {
     final tasks = await ref.read(routineDaoProvider).tasks();
     final n = ref.read(notificationServiceProvider);
     try {
+      ref.read(reminderErrorProvider.notifier).state = null;
       await n.rescheduleRoutine(tasks, enabled: s.remindersEnabled);
       await n.scheduleSummaries(enabled: s.summariesEnabled);
     } catch (e) {

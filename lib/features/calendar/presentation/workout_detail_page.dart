@@ -53,38 +53,92 @@ class WorkoutDetailPage extends ConsumerWidget {
           final segs = route.valueOrNull ?? const <List<LatLng>>[];
           final all = segs.expand((s) => s).toList();
           return ListView(padding: const EdgeInsets.all(16), children: [
-            Text(DateFormat('EEEE, MMM d · HH:mm').format(w.startedAt.toLocal()), style: Theme.of(context).textTheme.titleMedium),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  DateFormat('EEEE, MMM d · HH:mm').format(w.startedAt.toLocal()),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'Walk',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
             SizedBox(
-              height: 260,
+              height: 280,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: all.length < 2
                     ? const EmptyState(icon: Icons.map_outlined, message: 'No GPS route was recorded for this walk.')
                     : FlutterMap(
                         options: MapOptions(
-                          initialCameraFit: CameraFit.bounds(bounds: LatLngBounds.fromPoints(all), padding: const EdgeInsets.all(32)),
+                          initialCameraFit: CameraFit.bounds(
+                            bounds: LatLngBounds.fromPoints(all),
+                            padding: const EdgeInsets.all(36),
+                          ),
                         ),
                         children: [
-                          TileLayer(urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', userAgentPackageName: 'com.example.morning_fit'),
-                          PolylineLayer(polylines: [for (final s in segs) Polyline(points: s, strokeWidth: 5, color: Theme.of(context).colorScheme.primary)]),
+                          TileLayer(
+                            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            userAgentPackageName: 'com.example.morning_fit',
+                          ),
+                          PolylineLayer(polylines: [
+                            for (final s in segs)
+                              Polyline(
+                                points: s,
+                                strokeWidth: 5,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                          ]),
                           MarkerLayer(markers: [
-                            Marker(point: all.first, width: 24, height: 24, child: const Icon(Icons.trip_origin, color: Colors.green)),
-                            Marker(point: all.last, width: 24, height: 24, child: const Icon(Icons.flag, color: Colors.red)),
+                            Marker(
+                              point: all.first,
+                              width: 32,
+                              height: 32,
+                              child: Container(
+                                decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                                padding: const EdgeInsets.all(2),
+                                child: const Icon(Icons.trip_origin, color: Colors.green, size: 26),
+                              ),
+                            ),
+                            Marker(
+                              point: all.last,
+                              width: 32,
+                              height: 32,
+                              child: Container(
+                                decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                                padding: const EdgeInsets.all(2),
+                                child: const Icon(Icons.flag, color: Colors.red, size: 26),
+                              ),
+                            ),
                           ]),
                           const RichAttributionWidget(attributions: [TextSourceAttribution('© OpenStreetMap contributors')]),
                         ],
                       ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 1.9,
+              childAspectRatio: 1.8,
               children: [
                 StatTile(icon: Icons.route, value: formatDistance(w.distanceMeters, miles: miles), label: 'Distance'),
                 StatTile(icon: Icons.timer_outlined, value: formatDuration(w.durationSeconds), label: 'Active time'),

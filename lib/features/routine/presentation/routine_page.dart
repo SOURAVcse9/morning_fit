@@ -75,34 +75,37 @@ class RoutinePage extends ConsumerWidget {
                         Text('Done in last 14 days: ${completions.where((c) => c.taskId == t.id && c.status == 'done').length}', style: Theme.of(context).textTheme.bodySmall),
                         Builder(builder: (_) {
                           final st = completions.where((c) => c.taskId == t.id && c.localDate == todayKey).firstOrNull?.status;
-                          return Row(children: [
-                            TextButton(onPressed: () => ref.read(routineDaoProvider).setCompletion(t.id, todayKey, st == 'done' ? null : 'done'), child: Text(st == 'done' ? 'Undo done' : 'Mark done')),
-                            TextButton(onPressed: () => ref.read(routineDaoProvider).setCompletion(t.id, todayKey, st == 'skipped' ? null : 'skipped'), child: Text(st == 'skipped' ? 'Undo skip' : 'Skip today')),
-                            const Spacer(),
-                            IconButton(tooltip: 'Edit', icon: const Icon(Icons.edit_outlined), onPressed: () => _edit(context, ref, t)),
-                            IconButton(
-                              tooltip: 'Delete',
-                              icon: const Icon(Icons.delete_outline),
-                              onPressed: () async {
-                                final ok = await showDialog<bool>(
-                                  context: context,
-                                  builder: (c) => AlertDialog(
-                                    title: Text('Delete "${t.title}"?'),
-                                    actions: [
-                                      TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Cancel')),
-                                      FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('Delete')),
-                                    ],
-                                  ),
-                                );
-                                if (ok == true) {
-                                  final n = ref.read(notificationServiceProvider);
-                                  await n.rescheduleRoutine([t], enabled: false); // cancels this task's schedules
-                                  await ref.read(routineDaoProvider).deleteTask(t.id);
-                                  await _afterChange(ref);
-                                }
-                              },
-                            ),
-                          ]);
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(children: [
+                              TextButton(onPressed: () => ref.read(routineDaoProvider).setCompletion(t.id, todayKey, st == 'done' ? null : 'done'), child: Text(st == 'done' ? 'Undo done' : 'Mark done')),
+                              TextButton(onPressed: () => ref.read(routineDaoProvider).setCompletion(t.id, todayKey, st == 'skipped' ? null : 'skipped'), child: Text(st == 'skipped' ? 'Undo skip' : 'Skip today')),
+                              const SizedBox(width: 8),
+                              IconButton(tooltip: 'Edit', icon: const Icon(Icons.edit_outlined), onPressed: () => _edit(context, ref, t)),
+                              IconButton(
+                                tooltip: 'Delete',
+                                icon: const Icon(Icons.delete_outline),
+                                onPressed: () async {
+                                  final ok = await showDialog<bool>(
+                                    context: context,
+                                    builder: (c) => AlertDialog(
+                                      title: Text('Delete "${t.title}"?'),
+                                      actions: [
+                                        TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Cancel')),
+                                        FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('Delete')),
+                                      ],
+                                    ),
+                                  );
+                                  if (ok == true) {
+                                    final n = ref.read(notificationServiceProvider);
+                                    await n.rescheduleRoutine([t], enabled: false); // cancels this task's schedules
+                                    await ref.read(routineDaoProvider).deleteTask(t.id);
+                                    await _afterChange(ref);
+                                  }
+                                },
+                              ),
+                            ]),
+                          );
                         }),
                       ]),
                     ),
