@@ -8,6 +8,8 @@ build/
 local.properties
 key.properties
 *.jks
+android/.kotlin/
+android/hs_err_pid*.log
 ios/Pods/
 .DS_Store
 *.zip

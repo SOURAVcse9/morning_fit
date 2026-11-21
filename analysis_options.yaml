@@ -1,8 +1,13 @@
-include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
-    - "**/*.g.dart"
     - build/**
     - android/**
     - ios/**
     - web/**
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true

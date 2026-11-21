@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const seed = Color(0xFF2E9E5B);
-  static const space = 16.0;
+  static const seed = Color(0xFF21865B);
 
-  static ThemeData _base(Brightness b) {
-    final scheme = ColorScheme.fromSeed(seedColor: seed, brightness: b);
+  static ThemeData get light => _build(Brightness.light);
+  static ThemeData get dark => _build(Brightness.dark);
+
+  static ThemeData _build(Brightness brightness) {
+    final scheme =
+        ColorScheme.fromSeed(seedColor: seed, brightness: brightness);
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
+      scaffoldBackgroundColor: brightness == Brightness.light
+          ? const Color(0xFFF6F8F6)
+          : const Color(0xFF101512),
       cardTheme: CardThemeData(
         elevation: 0,
         margin: EdgeInsets.zero,
-        color: scheme.surfaceContainerLow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          minimumSize: const Size(48, 52),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-      ),
-      appBarTheme: const AppBarTheme(centerTitle: false),
+      inputDecorationTheme:
+          const InputDecorationTheme(border: OutlineInputBorder()),
     );
   }
-
-  static ThemeData light() => _base(Brightness.light);
-  static ThemeData dark() => _base(Brightness.dark);
 }

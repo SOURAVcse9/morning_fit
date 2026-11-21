@@ -1,142 +1,75 @@
-# MorningFit — Walk Better. Live Healthier.
+# MorningFit
 
-<p align="center">
-  <img src="assets/images/logo.png" alt="MorningFit Logo" width="128" height="128" style="border-radius: 28px;" />
-</p>
+Offline-first Flutter walking and home-fitness tracker starter project.
 
-[![Flutter Tests](https://img.shields.io/badge/Flutter%20Tests-29%20Passing-brightgreen.svg)](#tests)
-[![Flutter Analyze](https://img.shields.io/badge/Flutter%20Analyze-0%20Issues-brightgreen.svg)](#code-quality)
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](#platforms)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-orange.svg)](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
+## Included in this starter
 
-An offline-first, modern Flutter walking and fitness tracker for Android, iOS, and Web. Features step counting, GPS route tracking and distance visualization on OpenStreetMap, workout history calendar, analytics, daily routines, home exercise library, and local reminders.
+- Feature-first Flutter folder structure.
+- Material 3 light/dark theme and GoRouter routes.
+- Drift SQLite schema for workouts, route points, routine tasks, completions, exercises, exercise sessions, and settings.
+- Starter home-exercise records seeded into SQLite.
+- Walking screen prototype with GPS stream, step stream, OpenStreetMap tiles, and route polyline.
+- Local workout persistence and completed-workout history.
+- Calendar history and monthly distance chart.
+- Local notification initialization and a test-notification action.
+- Android permission manifest and iOS usage descriptions.
+- Basic unit/widget tests.
 
----
+## Important status note
 
-## 🚀 Release Download
+This is a **starter implementation, not yet a production-ready release**. The current source passes static analysis and automated tests, but it still needs real-device and release-build validation. Native background tracking is not fully implemented: a production version needs an Android foreground location service and platform-specific lifecycle handling, plus a tested iOS Core Location background configuration. Scheduled daily alarms also need timezone-aware scheduling and platform-specific validation. Step-count behavior varies by device and operating system.
 
-* **Direct APK Download (GitHub Release):** [morning_fit-v1.0.0.apk](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk)
-* **In-Repository File:** [release/morning_fit-v1.0.0-release.apk](release/morning_fit-v1.0.0-release.apk)
-* **Release Page:** [MorningFit v1.0.0 Release Notes & Assets](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
-* **File Size:** 62.6 MB (rebuilt from the current `main` source)
-* **Target Platforms:** Android 6.0+ (API 23+)
-* **Architecture:** Universal (arm64-v8a, armeabi-v7a, x86_64)
+The generated Drift file `lib/data/local/app_database.g.dart` is intentionally not included; generate it locally with build_runner.
 
-The checked-in APK at `release/morning_fit-v1.0.0-release.apk` is built from
-version `1.0.0+1`. The current source was verified with Flutter 3.47.5:
-`flutter analyze` reported no issues, all 29 tests passed, and
-`flutter build apk --release` completed successfully.
+## Requirements
 
-### How to Install the APK on Android
-1. Download the APK using the [Direct Download Link](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk).
-2. Open the downloaded `.apk` file on your Android device.
-3. If prompted, grant permission to "Install from unknown sources" in settings.
-4. Tap **Install** and launch MorningFit!
+Install a current stable Flutter SDK, Android Studio/Android SDK for Android builds, and macOS with Xcode for iOS builds. iOS builds cannot be produced on Windows.
 
----
-
-## 🌐 Running on Web
-
-MorningFit supports web deployment with responsive UI:
+## Setup
 
 ```bash
-# Run locally in Google Chrome
-flutter run -d chrome
-
-# Or build a production web bundle
-flutter build web --release
-```
-
-The compiled web assets are generated in `build/web/` and can be deployed directly to GitHub Pages, Firebase Hosting, Netlify, or Vercel.
-
----
-
-## 📱 Getting Started & Development
-
-### 1. Prerequisites
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) (>= 3.4.0)
-- Java JDK 17+ & Android SDK (for Android build)
-- Google Chrome (for Web testing)
-
-### 2. Setup
-```bash
-# Get dependencies
+flutter doctor
 flutter pub get
-
-# Generate Drift database code (lib/data/local/app_database.g.dart)
 dart run build_runner build --delete-conflicting-outputs
-```
-
-### 3. Run the App
-```bash
-# Run on connected Android / iOS device:
-flutter run
-
-# Run on Web (Chrome):
-flutter run -d chrome
-```
-
-### 4. Build Release APK
-```bash
-flutter build apk --release
-```
-The output APK will be generated at `build/app/outputs/flutter-apk/app-release.apk`.
-
----
-
-## 🧪 Tests & Code Quality
-
-The current source passes static analysis and all 29 automated tests:
-
-```bash
-# Run static analysis (0 warnings, 0 errors)
 flutter analyze
-
-# Run the complete test suite (29 tests passing)
 flutter test
+flutter run
 ```
 
-### Test Coverage
-- **Unit Tests (`test/unit/`):**
-  - Haversine distance calculations and symmetry.
-  - GPS route recording, duplicate filtering, jitter suppression, and accuracy limits.
-  - Step counter delta tracking, sensor baselines, and reset handling.
-  - Analytics, weekly/monthly aggregations, and streak calculations.
-- **Database Tests (`test/database/`):**
-  - In-memory Drift SQLite: CRUD operations, foreign key constraints, cascading deletes, transactions, and crash recovery.
-- **Widget Tests (`test/widget/`):**
-  - Dashboard layout, empty states, and dynamic statistics updates.
+If the generated platform directories are incomplete for your local Flutter version, create a fresh shell project with `flutter create .` from the project root and carefully merge the supplied platform configuration. Back up files before merging.
 
----
+## Map
 
-## 🏛️ Architecture & Features
+The walking screen uses OpenStreetMap standard tiles and displays attribution through `flutter_map`'s standard tile layer behavior. Follow the tile provider's current usage policy. Do not bulk-download standard OSM tiles for offline use.
 
-Built using a **feature-first** architecture:
-* `lib/core`: Theme, GoRouter navigation, error handling, reusable UI components.
-* `lib/data/local`: Drift SQLite database, DAOs, schema tables, default seed data.
-* `lib/services`: Location tracking (`geolocator`), pedometer step sensor (`pedometer`), local notifications (`flutter_local_notifications`).
-* `lib/features/`:
-  - `dashboard`: Real-time daily progress, step goal visualization, recent walks, routine checklists.
-  - `walking`: Live workout state machine (`idle` → `recording` ⇄ `paused` → `saved`), GPS map tracking with `flutter_map` / OpenStreetMap.
-  - `calendar`: Workout history logs, route replay, detailed pace/distance/calorie metrics.
-  - `analytics`: Weekly bar charts, monthly trends, goal streaks.
-  - `exercises`: Home routine library with timers for sets, reps, and rest periods.
-  - `settings`: Configurable goals (steps, distance), metric/imperial unit toggle, dark/light theme, database reset, and data export.
-* `lib/shared`: Riverpod providers, immutable data models.
+## Permissions
 
----
+### Android
 
-## 🔐 Permissions Overview
+The manifest includes location, activity recognition, notification, and foreground-service permission declarations. Confirm exact requirements for the Android versions you target. Do not add background location permission unless the implemented feature genuinely needs it and the permission flow is justified. Configure a location foreground service before claiming active background GPS tracking works.
 
-| Permission | Platform | Trigger | Purpose |
-|---|---|---|---|
-| Location (Fine & Coarse) | Android / iOS / Web | Tapping **Start Walk** | Accurate route tracking and distance |
-| Foreground Service (Location) | Android | While a walk is recording | Keeps GPS active in background |
-| Activity Recognition | Android 10+ / iOS | Walking workout | Step sensor counting |
-| Post Notifications | Android 13+ / iOS | App startup / Reminders toggle | Workout and routine reminders |
+### iOS
 
----
+The supplied Info.plist includes location and motion usage descriptions and the location background mode. Validate the Runner target capabilities and Core Location implementation in Xcode. Background tracking can be interrupted by system policies and is not guaranteed after a force quit.
 
-## 📄 License
+## Data model notes
 
-This project is licensed under the MIT License.
+- Distances are stored in meters and durations in seconds.
+- Absolute timestamps should be UTC; calendar groupings use local dates.
+- Route points are linked to workouts and cascade on workout deletion.
+- Do not count the same workout twice in daily summaries.
+
+## Known limitations to complete before release
+
+1. Complete and test native background location recording on Android and iOS.
+2. Add timezone-aware daily/weekly notification scheduling.
+3. Improve step baseline and midnight/day-boundary handling using device-specific tests.
+4. Add editing/completion UI for routine tasks and exercise session logging.
+5. Add workout detail, route replay, export, settings persistence, and migration tests.
+6. Review GPS outlier handling and persist route points in a robust batch strategy.
+7. Validate dependency versions and fix any analyzer/build issues for the installed SDK.
+8. Test on real devices with permissions granted, denied, revoked, and after reboot.
+
+## Tests
+
+The current test suite checks the Haversine utility and app startup. All 3 tests pass; expand coverage and validate hardware-dependent behavior before release.
