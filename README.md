@@ -18,9 +18,14 @@ An offline-first, modern Flutter walking and fitness tracker for Android, iOS, a
 * **Direct APK Download (GitHub Release):** [morning_fit-v1.0.0.apk](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk)
 * **In-Repository File:** [release/morning_fit-v1.0.0-release.apk](release/morning_fit-v1.0.0-release.apk)
 * **Release Page:** [MorningFit v1.0.0 Release Notes & Assets](https://github.com/SOURAVcse9/morning_fit/releases/tag/v1.0.0)
-* **File Size:** ~62.6 MB
+* **File Size:** 62.6 MB (rebuilt from the current `main` source)
 * **Target Platforms:** Android 6.0+ (API 23+)
 * **Architecture:** Universal (arm64-v8a, armeabi-v7a, x86_64)
+
+The checked-in APK at `release/morning_fit-v1.0.0-release.apk` is built from
+version `1.0.0+1`. The current source was verified with Flutter 3.47.5:
+`flutter analyze` reported no issues, all 29 tests passed, and
+`flutter build apk --release` completed successfully.
 
 ### How to Install the APK on Android
 1. Download the APK using the [Direct Download Link](https://github.com/SOURAVcse9/morning_fit/releases/download/v1.0.0/morning_fit-v1.0.0.apk).
@@ -81,7 +86,7 @@ The output APK will be generated at `build/app/outputs/flutter-apk/app-release.a
 
 ## 🧪 Tests & Code Quality
 
-MorningFit has been thoroughly audited and tested with 100% passing results:
+The current source passes static analysis and all 29 automated tests:
 
 ```bash
 # Run static analysis (0 warnings, 0 errors)
