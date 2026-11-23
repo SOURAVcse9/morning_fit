@@ -10,7 +10,6 @@ import '../../../services/steps/step_counter_service.dart';
 import '../../../data/local/app_database.dart';
 
 final locationServiceProvider = Provider((ref) => LocationService());
-final stepCounterServiceProvider = Provider((ref) => StepCounterService());
 final walkingControllerProvider =
     StateNotifierProvider<WalkingController, WalkingState>(
         (ref) => WalkingController(ref));
